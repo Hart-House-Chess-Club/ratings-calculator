@@ -79,16 +79,15 @@ def provisional_unrated_players(ratings: list, wins: int, losses: int, games_pla
     return Rp
 
 
-def established_ratings(old_rating: int, score: int, opponent_ratings: list, all_time_high: int) -> int:
+def established_ratings(old_rating: int, score: int, opponent_ratings: list) -> int:
     """
     Returns the established rating from the dictionary of ratings
-    :param all_time_high: whether it is an all time high score. 1 if true, 0 if false
     :param score: the total score from the tournament
     :param opponent_ratings: a list of opponent ratings
     :param old_rating: the player's old rating
     :return: returns the established rating of the player.
-    >>> expected_dict = established_ratings()
-    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133], 0)
+    >>> expected_dict = expected_scores_init()
+    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
     1487
     """
     # K=32 for players under 2200 and K=16 for players at or over 2200;
@@ -99,10 +98,16 @@ def established_ratings(old_rating: int, score: int, opponent_ratings: list, all
         multiplier = 32
 
     expected_scores = expected_scores_init()
-    Rp = old_rating + multiplier * (score - expected_total_score(expected_scores, old_rating, opponent_ratings))
-    bonus = bonuses(all_time_high, multiplier, Rp, old_rating, len(opponent_ratings))
-    sum = Rp + bonus
-    return round(sum)
+    new_rating = old_rating + multiplier * (score - expected_total_score(expected_scores, old_rating, opponent_ratings))
+
+    if new_rating > old_rating:
+        all_time_high = 1
+    else:
+        all_time_high = 0
+
+    bonus = bonuses(all_time_high, multiplier, new_rating, old_rating, len(opponent_ratings))
+    sum_of_scores = new_rating + bonus
+    return round(sum_of_scores)
 
 
 def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
