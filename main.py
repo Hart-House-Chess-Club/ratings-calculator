@@ -79,16 +79,16 @@ def provisional_unrated_players(ratings: list, wins: int, losses: int, games_pla
     return Rp
 
 
-def established_ratings(old_rating: int, score: int, opponent_ratings: list) -> int:
+def established_ratings(old_rating: int, score: int, opponent_ratings: list, all_time_high_rating: int) -> int:
     """
-    Returns the established rating from the dictionary of ratings
+    Returns the updated rating from the dictionary of ratings after adjusting for bonuses
     :param score: the total score from the tournament
+    :param all_time_high_rating: the player's all time high rating
     :param opponent_ratings: a list of opponent ratings
     :param old_rating: the player's old rating
     :return: returns the established rating of the player.
-    >>> expected_dict = expected_scores_init()
-    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
-    1487
+    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133], 1600)
+    1496
     """
     # K=32 for players under 2200 and K=16 for players at or over 2200;
     # Rn = Ro + 32 (S - Sx)
@@ -100,7 +100,7 @@ def established_ratings(old_rating: int, score: int, opponent_ratings: list) -> 
     expected_scores = expected_scores_init()
     new_rating = old_rating + multiplier * (score - expected_total_score(expected_scores, old_rating, opponent_ratings))
 
-    if new_rating > old_rating:
+    if new_rating > all_time_high_rating:
         all_time_high = 1
     else:
         all_time_high = 0
@@ -124,15 +124,18 @@ def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
     R_CHANGE_BONUS = 1.75
     R_CHANGE_THRESHOLD = 13
 
-    bonus1 = a * R_MAX_BONUS * k_factor
-    threshold = R_CHANGE_THRESHOLD * k_factor * math.sqrt(n)
+    k_error = k_factor / 32  # k error is the ratio of the player's k factor to the k
+    # factor used for players rated under 2200.
+
+    bonus1 = a * R_MAX_BONUS * k_error
+    threshold = R_CHANGE_THRESHOLD * k_error * math.sqrt(n)
 
     if r_new > (r_old + threshold):
         b = 1
     else:
         b = 0
 
-    bonus2 = b * R_CHANGE_BONUS * (r_new - r_old - threshold) * k_factor
+    bonus2 = b * R_CHANGE_BONUS * (r_new - r_old - threshold) * k_error
     return bonus1 + bonus2
 
 
