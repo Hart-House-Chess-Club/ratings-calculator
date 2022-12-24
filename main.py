@@ -106,8 +106,9 @@ def established_ratings(old_rating: int, score: int, opponent_ratings: list, all
         all_time_high = 0
 
     bonus = bonuses(all_time_high, multiplier, new_rating, old_rating, len(opponent_ratings))
-    sum_of_scores = new_rating + bonus
-    return round(sum_of_scores)
+    sum_of_scores = round(new_rating + bonus)
+    final_rating = check_ratings_under_800(old_rating, sum_of_scores, provisional=False)
+    return final_rating
 
 
 def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
@@ -137,6 +138,43 @@ def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
 
     bonus2 = b * R_CHANGE_BONUS * (r_new - r_old - threshold) * k_error
     return bonus1 + bonus2
+
+
+def check_ratings_under_800(old_rating: int, new_rating: int, provisional: bool) -> int:
+    """
+    Returns a new rating based on whether the user's ratings were over 800 before the tournament.
+    If the user's rating was over 800, then their rating cannot be lower than 799. RULE 416 a
+    If the user's rating was below 800, and their rating afterwards is also below 800, we take the highest of either. RULE 416 b
+    If the post tournament rating is below 200, we set their rating to 200. RULE 416 c
+
+    :param old_rating: the rating (regardless of whether provisional) before the tournament.
+    :param new_rating: the new rating after bonus points
+    :param provisional: whether the rating is provisional
+    :return: an integer of their rating post adjustments
+    >>> check_ratings_under_800(1000, 300, False)
+    799
+    >>> check_ratings_under_800(600, 790, False)
+    790
+    >>> check_ratings_under_800(650, 560, False)
+    650
+    >>> check_ratings_under_800(204, 190, True)
+    200
+    >>> check_ratings_under_800(500, 1000, False)
+    1000
+    """
+    # RULE 416 a
+    if new_rating < 800 and old_rating > 799:
+        new_rating = 799
+
+    # RULE 416 b. Note: this only applies to permanent ratings
+    if new_rating < 800 and old_rating < 800 and not provisional:
+        if new_rating < old_rating:
+            new_rating = old_rating
+
+    if new_rating < 200 and provisional:
+        new_rating = 200
+
+    return new_rating
 
 
 def expected_total_score(expected_dict: dict, rating: int, opponent_ratings: list):
