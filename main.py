@@ -54,6 +54,45 @@ as deemed necessary and in consultation with the CFC Executive.
 """
 
 
+def rating_calculator(games_played: int, old_rating: int, wins: int, losses: int, opponent_ratings: list, all_time_high_rating: int) -> int:
+    """
+    Returns the updated rating from the dictionary of ratings after adjusting for bonuses
+    :param games_played: number of games played by the player going into the tournament
+    :param old_rating: the player's old rating
+    :param wins: the total wins from the tournament
+    :param losses: the total losses from the tournament
+    :param all_time_high_rating: the player's all time high rating
+    :param opponent_ratings: a list of opponent ratings
+    :return: returns the established rating of the player.
+    >>> rating_calculator(100, 1450, 4, 2, [1237, 1511, 1214, 1441, 1579, 2133], 1600)
+    1496
+    """
+    # K=32 for players under 2200 and K=16 for players at or over 2200;
+    # Rn = Ro + 32 (S - Sx)
+    if old_rating >= 2199:
+        multiplier = 16
+    else:
+        multiplier = 32
+
+    if games_played + len(opponent_ratings) < 25:
+        new_rating = provisional_unrated_players(opponent_ratings, wins, losses, len(opponent_ratings))
+        provisional = True
+    else:
+        new_rating = established_ratings(old_rating, wins, opponent_ratings, multiplier)
+        provisional = False
+
+    if new_rating > all_time_high_rating:
+        all_time_high = 1
+    else:
+        all_time_high = 0
+
+    bonus = bonuses(all_time_high, multiplier, new_rating, old_rating, len(opponent_ratings))
+    sum_of_scores = round(new_rating + bonus)
+    final_rating = check_ratings_under_800(old_rating, sum_of_scores, provisional)
+
+    return final_rating
+
+
 def average_rating(ratings: list) -> float:
     """
     Average ratings of the list of the ratings
@@ -68,47 +107,35 @@ def average_rating(ratings: list) -> float:
 
 def provisional_unrated_players(ratings: list, wins: int, losses: int, games_played: int) -> object:
     """
-    wins is the number of wins,
-    losses is the number of losses
-    games_played is the number of games
-    ratings is the list of opponent's ratings
+    Returns the provisional rating of the player based on the list of players and the score from that list
+    :param wins: is the number of wins,
+    :param losses: is the number of losses
+    :param games_played: is the number of games
+    :param ratings: is the list of opponent's ratings
     """
     Rc = average_rating(ratings)
     # Rp = Rc + 400 (W - L) / N
     Rp = Rc + 400 * (wins - losses) / games_played
+
     return Rp
 
 
-def established_ratings(old_rating: int, score: int, opponent_ratings: list, all_time_high_rating: int) -> int:
+def established_ratings(old_rating: int, score: int, opponent_ratings: list, multiplier: int) -> int:
     """
     Returns the updated rating from the dictionary of ratings after adjusting for bonuses
+    :param multiplier: the multipler of the ratings based on the origianl ratings
     :param score: the total score from the tournament
-    :param all_time_high_rating: the player's all time high rating
     :param opponent_ratings: a list of opponent ratings
     :param old_rating: the player's old rating
     :return: returns the established rating of the player.
-    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133], 1600)
-    1496
+    >>> established_ratings(1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
+    1487
     """
-    # K=32 for players under 2200 and K=16 for players at or over 2200;
-    # Rn = Ro + 32 (S - Sx)
-    if old_rating >= 2199:
-        multiplier = 16
-    else:
-        multiplier = 32
 
     expected_scores = expected_scores_init()
     new_rating = old_rating + multiplier * (score - expected_total_score(expected_scores, old_rating, opponent_ratings))
 
-    if new_rating > all_time_high_rating:
-        all_time_high = 1
-    else:
-        all_time_high = 0
-
-    bonus = bonuses(all_time_high, multiplier, new_rating, old_rating, len(opponent_ratings))
-    sum_of_scores = round(new_rating + bonus)
-    final_rating = check_ratings_under_800(old_rating, sum_of_scores, provisional=False)
-    return final_rating
+    return new_rating
 
 
 def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
