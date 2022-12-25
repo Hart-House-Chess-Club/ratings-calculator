@@ -249,7 +249,7 @@ def expected_scores_init() -> dict:
     """
     # file is recommend to be in the following format: starting rank, Name of Player, CFC ID
     # information of the event
-    file_name = "ExpectedScores.csv"
+    file_name = "../../ExpectedScores.csv"
     expected_scores_higher = {}
 
     with open(file_name, 'r') as f:
