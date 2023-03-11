@@ -79,10 +79,10 @@ def provisional_unrated_players(ratings: list, wins: int, losses: int, games_pla
     return Rp
 
 
-def established_ratings(all_time_high: int, old_rating: int, score: int, opponent_ratings: list) -> int:
+def established_ratings(all_time_high_score: int, old_rating: int, score: float, opponent_ratings: list) -> float:
     """
     Returns the established rating from the dictionary of ratings
-    :param all_time_high: the all time high of the player
+    :param all_time_high_score: the all time high of the player
     :param score: the total score from the tournament
     :param opponent_ratings: a list of opponent ratings
     :param old_rating: the player's old rating
@@ -98,11 +98,11 @@ def established_ratings(all_time_high: int, old_rating: int, score: int, opponen
     else:
         multiplier = 32
 
-    expected_scores = expected_scores_init()
-    expected_total = expected_total_score(expected_scores, old_rating, opponent_ratings)
+    expected_scores_dict = expected_scores_init()
+    expected_total = expected_total_score(expected_scores_dict, old_rating, opponent_ratings)
     new_rating = old_rating + multiplier * (score - expected_total)
 
-    if new_rating > all_time_high:
+    if new_rating > all_time_high_score:
         all_time_high_valid = 1
     else:
         all_time_high_valid = 0
@@ -110,10 +110,10 @@ def established_ratings(all_time_high: int, old_rating: int, score: int, opponen
     multiplier_e = multiplier // 32  # ratio of the multiplier to ratings under 2200.
     bonus = bonuses(all_time_high_valid, multiplier_e, new_rating, old_rating, len(opponent_ratings))
     sum_of_scores = new_rating + bonus
-    return round(sum_of_scores)
+    return sum_of_scores
 
 
-def bonuses(a: int, k_factor_e: int, r_new: int, r_old: int, n: int) -> int:
+def bonuses(a: int, k_factor_e: int, r_new: float, r_old: int, n: int) -> int:
     """
     Returns the total sum of all bonuses available
     :param a: is = 1 if all time high, 0 otherwise
@@ -151,8 +151,8 @@ def expected_total_score(expected_dict: dict, rating: int, opponent_ratings: lis
     :param expected_dict: is the expected dictionary of scores based on CFC data
     :param rating: is the player's rating
     :param opponent_ratings: is the opponent's rating in a lists
-    >>> expected_dict = expected_scores_init()
-    >>> expected_total_score(expected_dict, 1450, [1237, 1511, 1214, 1441, 1579, 2133])
+    >>> expected_dictionary = expected_scores_init()
+    >>> expected_total_score(expected_dictionary, 1450, [1237, 1511, 1214, 1441, 1579, 2133])
     2.84
     """
     sum_expected = 0
@@ -217,7 +217,48 @@ def expected_scores_init() -> dict:
 
 
 if __name__ == "__main__":
-    print(expected_scores_init())
-    # print(bonuses(1, 1, 1487, 1450, 6))
-    print(established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133]))
-    pass
+    print("Welcome to Ratings Calculator\n\n"
+          "This project is about calculating more accurate CFC ratings than ever before. \n"
+          "\n"
+          "Please note the following: \n"
+          "     - You must use ratings < 3000 \n"
+          "     - You must use no extra whitespace\n"
+          "\n"
+          "These are initial considerations and we will aim to remove these requirements in future iterations\n"
+          "\n"
+          "Best of luck in your chess endeavours!\n")
+
+    # initialize expected scores dictionary to begin
+    expected_scores = expected_scores_init()
+
+    # get data from user
+    cfc_id = int(input("Enter CFC ID: "))
+
+    # get number of games played
+    n = int(input("Number of games played: "))
+
+    ratings_list = []
+    for i in range(1, n+1):
+        ele = int(input("Rating of player " + str(i) + ": "))
+        ratings_list.append(ele)
+
+    # get total score of player
+    wins = int(input("Wins: "))
+    losses = int(input("Losses: "))
+    draws = int(input("Draws: "))
+
+    # get all time high rating, current rating, (we can use the CFC api in the future to remove the need for this).
+    current_rating = int(input("Current Rating: "))
+
+    all_time_high = int(input("All Time High Rating: "))
+
+    # established or provisional rating? (can be removed in the future))
+    rating_type = int(input("Rating Type: (1 for established, 0 for provisional: "))
+
+    if rating_type == 1:
+        # new_rating = established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
+        calc_new_rating = established_ratings(all_time_high, current_rating, (wins+draws), ratings_list)
+    else:
+        calc_new_rating = provisional_unrated_players(ratings_list, n, wins, losses)
+
+    print("New Rating is: ", calc_new_rating)
