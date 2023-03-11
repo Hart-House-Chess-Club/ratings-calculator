@@ -79,9 +79,10 @@ def provisional_unrated_players(ratings: list, wins: int, losses: int, games_pla
     return Rp
 
 
-def established_ratings(old_rating: int, score: int, opponent_ratings: list) -> int:
+def established_ratings(all_time_high: int, old_rating: int, score: int, opponent_ratings: list) -> int:
     """
     Returns the established rating from the dictionary of ratings
+    :param all_time_high: the all time high of the player
     :param score: the total score from the tournament
     :param opponent_ratings: a list of opponent ratings
     :param old_rating: the player's old rating
@@ -98,42 +99,50 @@ def established_ratings(old_rating: int, score: int, opponent_ratings: list) -> 
         multiplier = 32
 
     expected_scores = expected_scores_init()
-    new_rating = old_rating + multiplier * (score - expected_total_score(expected_scores, old_rating, opponent_ratings))
+    expected_total = expected_total_score(expected_scores, old_rating, opponent_ratings)
+    new_rating = old_rating + multiplier * (score - expected_total)
 
-    if new_rating > old_rating:
-        all_time_high = 1
+    if new_rating > all_time_high:
+        all_time_high_valid = 1
     else:
-        all_time_high = 0
+        all_time_high_valid = 0
 
-    bonus = bonuses(all_time_high, multiplier, new_rating, old_rating, len(opponent_ratings))
+    multiplier_e = multiplier // 32  # ratio of the multiplier to ratings under 2200.
+    bonus = bonuses(all_time_high_valid, multiplier_e, new_rating, old_rating, len(opponent_ratings))
     sum_of_scores = new_rating + bonus
     return round(sum_of_scores)
 
 
-def bonuses(a: int, k_factor: int, r_new: int, r_old: int, n: int) -> float:
+def bonuses(a: int, k_factor_e: int, r_new: int, r_old: int, n: int) -> int:
     """
     Returns the total sum of all bonuses available
-    :param a:
-    :param k_factor:
-    :param r_new:
-    :param r_old:
-    :param n:
-    :return:
+    :param a: is = 1 if all time high, 0 otherwise
+    :param k_factor_e: ratio of the player's k factor to the k factor used for players under 2200
+    :param r_new: post-event rating
+    :param r_old: pre-event rating
+    :param n: number of games played
+    :return: value of the new rating
+    >>> bonuses(0, 1, 1487, 1450, 6)
+    1496
     """
-    R_MAX_BONUS = 20
+    if n < 4:  # no bonus points awarded if less than 4 games played
+        return 0
+
+    R_MAX_BONUS = 20  # constants set
     R_CHANGE_BONUS = 1.75
     R_CHANGE_THRESHOLD = 13
 
-    bonus1 = a * R_MAX_BONUS * k_factor
-    threshold = R_CHANGE_THRESHOLD * k_factor * math.sqrt(n)
+    bonus1 = a * R_MAX_BONUS * k_factor_e
+    threshold = R_CHANGE_THRESHOLD * k_factor_e * math.sqrt(n)
 
     if r_new > (r_old + threshold):
         b = 1
     else:
         b = 0
 
-    bonus2 = b * R_CHANGE_BONUS * (r_new - r_old - threshold) * k_factor
-    return bonus1 + bonus2
+    bonus2 = b * R_CHANGE_BONUS * (r_new - r_old - threshold) * k_factor_e
+    total_bonus = round(bonus1 + bonus2)
+    return total_bonus
 
 
 def expected_total_score(expected_dict: dict, rating: int, opponent_ratings: list):
@@ -209,4 +218,6 @@ def expected_scores_init() -> dict:
 
 if __name__ == "__main__":
     print(expected_scores_init())
+    # print(bonuses(1, 1, 1487, 1450, 6))
+    print(established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133]))
     pass
