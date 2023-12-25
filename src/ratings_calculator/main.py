@@ -1,4 +1,4 @@
-import RatingsCalculator
+from src.ratings_calculator.RatingsCalculator import RatingsCalculator
 
 """
 @author Victor Zheng
