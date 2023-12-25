@@ -1,5 +1,4 @@
 import unittest
-
 from src.ratings_calculator.main import RatingsCalculator
 
 
@@ -18,9 +17,9 @@ class TestBasicFunctionalities(unittest.TestCase):
 
     def test_one_game(self) -> None:
         ratings = RatingsCalculator()
-        new_rating = ratings.established_ratings(1000, 1000, 1, [1200])
+        new_rating = ratings.established_ratings(2160, 2052, 0, [2208])
         print("New Rating is: ", new_rating)
-        self.assertEqual(new_rating, 1200)  # add assertion here
+        self.assertEqual(round(new_rating), 2043)  # add assertion here
 
     def test_victor_october_open(self) -> None:
         # test the calc against perf at october open for 150532
@@ -36,12 +35,20 @@ class TestBasicFunctionalities(unittest.TestCase):
         print("New Rating is: ", new_rating)
         self.assertEqual(round(new_rating), 2014)  # add assertion here
 
-    def test_victor(self) -> None:
+    def test_quick_ratings_blitz(self) -> None:
         # test the calc against perf at october open for 150532
         ratings = RatingsCalculator()
-        new_rating = ratings.established_ratings(2160, 2068, 2.5, [1949, 1982, 1892, 1843, 1898, 1936])
+        # Can transnational of 14 games
+        new_rating = ratings.established_ratings(1892, 2002, 7, [1927, 1876, 1899, 1841, 1429], quick=True)
         print("New Rating is: ", new_rating)
-        self.assertEqual(round(new_rating), 2014)  # add assertion here
+        self.assertAlmostEquals(round(new_rating), 2092, 3)  # add assertion here
+
+    def test_quick_ratings_with_lifetime_high(self) -> None:
+        # test the calc against perf at october open for 150532
+        ratings = RatingsCalculator()
+        new_rating = ratings.established_ratings(2002, 2002, 5, [1927, 1876, 1899, 1841, 1429], quick=False)
+        print("New Rating is: ", new_rating)
+        self.assertAlmostEquals(round(new_rating), 2092, 3)  # add assertion here
 
 
 if __name__ == '__main__':

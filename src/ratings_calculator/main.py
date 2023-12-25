@@ -51,6 +51,8 @@ RChangeBonus = 1.75 (a constant);
 RChangeThreshold = 13 (a constant).
 The numerical values in the bonus point equation may be adjusted from time to time by the Rating Auditor
 as deemed necessary and in consultation with the CFC Executive.
+
+From 411.1 Quick Chess, quick ratings will be calculated with 1/2 of the k factor
 """
 
 """
@@ -90,14 +92,15 @@ class RatingsCalculator:
         Rp = Rc + 400 * (wins - losses) / games_played
         return Rp
 
-    def established_ratings(self, all_time_high_score: int, old_rating: int, score: float, opponent_ratings: list) -> float:
+    def established_ratings(self, all_time_high_score: int, old_rating: int, score: float, opponent_ratings: list, quick = False) -> float:
         """
         Returns the established rating from the dictionary of ratings
         :param all_time_high_score: the all time high of the player
         :param score: the total score from the tournament
         :param opponent_ratings: a list of opponent ratings
         :param old_rating: the player's old rating
-        :return: returns the established rating of the player.
+        :param quick: if the time control used is between 5 and 14 minutes
+        :return: returns the established rating of the player
         >>> ratingTest = RatingsCalculator()
         >>> # expected_dict = ratingTest.expected_scores_init()
         >>> ratingTest.established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
@@ -109,6 +112,10 @@ class RatingsCalculator:
             multiplier = 16
         else:
             multiplier = 32
+
+        # if quick (where time control used is between 5-14 min)
+        if quick:
+            multiplier = multiplier // 2
 
         # expected_scores_dict = self.expected_scores_init()
 
