@@ -52,7 +52,20 @@ RChangeThreshold = 13 (a constant).
 The numerical values in the bonus point equation may be adjusted from time to time by the Rating Auditor
 as deemed necessary and in consultation with the CFC Executive.
 
-From 411.1 Quick Chess, quick ratings will be calculated with 1/2 of the k factor
+TODO: From 411.1 Quick Chess, quick ratings will be calculated with 1/2 of the k factor
+- this appears to not be in effect? 
+
+TODO: This is not covered by the current calculation: 
+416. For a player with a pre-event rating below 800.
+
+TODO: If a player’s post tournament rating (including any participation and bonus points) is less than 200, the player is entered in the rating list at 200. This applies to both provisional and permanent ratings.
+
+TODO: Provisional ratings: 3 to 24 games
+
+
+TODO: For players who start a tournament above 2200 and during the event drop below 2200, we currently assume that the k factor remians the same.
+However, this is not correct as the ratings can change. 
+
 """
 
 """
