@@ -58,12 +58,15 @@ TODO: From 411.1 Quick Chess, quick ratings will be calculated with 1/2 of the k
 TODO: This is not covered by the current calculation: 
 416. For a player with a pre-event rating below 800.
 
-TODO: If a player’s post tournament rating (including any participation and bonus points) is less than 200, the player is entered in the rating list at 200. This applies to both provisional and permanent ratings.
+TODO: If a player’s post tournament rating (including any participation and bonus points) is less than 200, the player 
+is entered in the rating list at 200. This applies to both provisional and permanent ratings.
 
 TODO: Provisional ratings: 3 to 24 games
 
 
-TODO: For players who start a tournament above 2200 and during the event drop below 2200, we currently assume that the k factor remians the same.
+TODO: For players who start a tournament above 2200 and during the event drop below 2200, we currently assume that the 
+k factor remians the same.
+
 However, this is not correct as the ratings can change. 
 
 """
@@ -116,6 +119,24 @@ class Profile:
             return 0
         else:
             return len(self.profile["player"]["events"])
+
+    def get_last_tournaments(self, num_tournaments: int) -> []:
+        """
+        Gets the number of events that this user has participated in
+        :param num_tournaments: previous n tournaments to get.
+        :return: events that this user has played in
+        """
+
+        tournament_data = []
+
+        if num_tournaments > len(self.profile["player"]["events"]):
+            # if the number of tournaments is greater than the number that exists in the json, take that number
+            num_tournaments = len(self.profile["player"]["events"])
+
+        for i in range(num_tournaments):
+            tournament_data.append(self.profile["player"]["events"][i])
+
+        return tournament_data
 
 
 class RatingsCalculator:

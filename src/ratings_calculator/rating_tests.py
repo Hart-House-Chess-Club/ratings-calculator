@@ -5,10 +5,12 @@ from src.ratings_calculator.main import RatingsCalculator, Profile
 class TestProfileFunctionality(unittest.TestCase):
     def test_name_input_correct(self) -> None:
         profile = Profile(150532, False)  # for now, input int
-        profile = profile.get_profile()
-        self.assertEqual(profile["player"]["name_first"], "Victor")
-        self.assertEqual(profile["player"]["name_last"], "Zheng")
+        profile_dict = profile.get_profile()
+        self.assertEqual(profile_dict["player"]["name_first"], "Victor")
+        self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
 
+        tour_data = profile.get_last_tournaments(5)
+        print(tour_data)
 
 class TestBasicFunctionalities(unittest.TestCase):
     def test_default_CFC_ratings_without_bonus(self) -> None:
