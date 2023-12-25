@@ -1,16 +1,18 @@
 import unittest
-from src.ratings_calculator.main import RatingsCalculator, Profile
+from src.ratings_calculator.Profile import CFCProfile
+from src.ratings_calculator.RatingsCalculator import RatingsCalculator
 
 
 class TestProfileFunctionality(unittest.TestCase):
     def test_name_input_correct(self) -> None:
-        profile = Profile(150532, False)  # for now, input int
+        profile = CFCProfile(150532, False)  # for now, input int
         profile_dict = profile.get_profile()
         self.assertEqual(profile_dict["player"]["name_first"], "Victor")
         self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
 
         tour_data = profile.get_last_tournaments(5)
         print(tour_data)
+
 
 class TestBasicFunctionalities(unittest.TestCase):
     def test_default_CFC_ratings_without_bonus(self) -> None:
