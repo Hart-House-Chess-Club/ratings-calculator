@@ -1,4 +1,4 @@
-import math
+import math, requests
 from csv import reader
 
 """
@@ -73,6 +73,37 @@ Calculates the ratings
 """
 
 
+class Profile:
+    """User id of the user that we are trying to get data for"""
+
+    # default constructor for ratings calculator
+    def __init__(self, user_id: int) -> None:
+        self.user_id = user_id
+        self.profile = self.initialize_profile()
+        return
+
+    def initialize_profile(self) -> dict:
+        """
+        Gets the profile of the user
+        :return: json dictionary mapping of the player and its fields
+        """
+        URL = f"https://server.chess.ca/api/player/v1/{self.user_id}"
+        page = requests.get(URL)
+        return page.json()
+
+    def get_events(self) -> int:
+        """
+        Gets the number of events that this user has participated in
+        :return: events that this user has played in
+        """
+        numEvents = 0
+        if self.profile["player"]["events"] == []:
+            return 0
+
+        else:
+            return len(self.profile["player"]["events"])
+
+
 class RatingsCalculator:
     """Ratings Calculator is a class that calculates ratings, cfc-style"""
 
@@ -105,7 +136,8 @@ class RatingsCalculator:
         Rp = Rc + 400 * (wins - losses) / games_played
         return Rp
 
-    def established_ratings(self, all_time_high_score: int, old_rating: int, score: float, opponent_ratings: list, quick = False) -> float:
+    def established_ratings(self, all_time_high_score: int, old_rating: int, score: float, opponent_ratings: list,
+                            quick=False) -> float:
         """
         Returns the established rating from the dictionary of ratings
         :param all_time_high_score: the all time high of the player
@@ -286,7 +318,7 @@ if __name__ == "__main__":
     n = int(numInput)
 
     ratings_list = []
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         ele = input("Rating of player " + str(i) + ": ")
 
         if not ele.isnumeric():
@@ -313,7 +345,7 @@ if __name__ == "__main__":
 
     if rating_type == 1:
         # new_rating = established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
-        calc_new_rating = ratingsCalc.established_ratings(all_time_high, current_rating, (wins+draws), ratings_list)
+        calc_new_rating = ratingsCalc.established_ratings(all_time_high, current_rating, (wins + draws), ratings_list)
     else:
         calc_new_rating = ratingsCalc.provisional_unrated_players(ratings_list, n, wins, losses)
 
