@@ -35,20 +35,22 @@ class TestBasicFunctionalities(unittest.TestCase):
         print("New Rating is: ", new_rating)
         self.assertEqual(round(new_rating), 2014)  # add assertion here
 
-    def test_quick_ratings_blitz(self) -> None:
+    def test_quick_ratings_gtcl_rapid(self) -> None:
         # test the calc against perf at october open for 150532
         ratings = RatingsCalculator()
         # Can transnational of 14 games
-        new_rating = ratings.established_ratings(1892, 2002, 7, [1927, 1876, 1899, 1841, 1429], quick=True)
+        new_rating = ratings.established_ratings(2002, 2002, 5, [1927, 1876, 1899, 1841, 1429], quick=False)
         print("New Rating is: ", new_rating)
-        self.assertAlmostEquals(round(new_rating), 2092, 3)  # add assertion here
+        # within three points
+        self.assertTrue(abs(round(new_rating) - 2092) <= 3)  # add assertion here
 
     def test_quick_ratings_with_lifetime_high(self) -> None:
         # test the calc against perf at october open for 150532
         ratings = RatingsCalculator()
-        new_rating = ratings.established_ratings(2002, 2002, 5, [1927, 1876, 1899, 1841, 1429], quick=False)
+        new_rating = ratings.established_ratings(1856, 1856, 9, [1431, 1431, 2024, 2024, 1478, 1478, 1710, 1710, 1938, 1938, 1535, 1535, 1986, 1986], quick=False)
         print("New Rating is: ", new_rating)
-        self.assertAlmostEquals(round(new_rating), 2092, 3)  # add assertion here
+        self.assertEqual(round(new_rating), 1882)  # add assertion here
+        # note for this tournament that this should be set to quick as true?
 
 
 if __name__ == '__main__':

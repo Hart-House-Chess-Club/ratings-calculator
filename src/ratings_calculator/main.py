@@ -106,6 +106,9 @@ class RatingsCalculator:
         >>> ratingTest.established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
         1487
         """
+        if score > len(opponent_ratings):
+            raise Exception("Cannot have higher score than games played")
+
         # K=32 for players under 2200 and K=16 for players at or over 2200;
         # Rn = Ro + 32 (S - Sx)
         if old_rating >= 2199:
