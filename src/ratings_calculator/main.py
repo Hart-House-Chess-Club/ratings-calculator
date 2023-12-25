@@ -190,7 +190,7 @@ def expected_scores_init() -> dict:
     """
     # file is recommend to be in the following format: starting rank, Name of Player, CFC ID
     # information of the event
-    file_name = "ExpectedScores.csv"
+    file_name = "C:\\Users\\zheng\\PycharmProjects\\ratings-calculator\\ExpectedScores.csv"
     expected_scores_higher = {}
 
     with open(file_name, 'r') as f:
@@ -232,14 +232,35 @@ if __name__ == "__main__":
     expected_scores = expected_scores_init()
 
     # get data from user
-    cfc_id = int(input("Enter CFC ID: "))
+    cfc_id_input = input("Enter CFC ID: ")
+
+    if not cfc_id_input.isnumeric():
+        print("ERROR: input for cfc id must be numeric")
+        exit(-1)
+
+    # else, convert
+    cfc_id = int(cfc_id_input)
 
     # get number of games played
-    n = int(input("Number of games played: "))
+    numInput = input("Number of games played: ")
+    if not numInput.isnumeric():
+        print("Error: input must be numeric")
+        exit(-1)  # exit with exit code 1
+
+    # else, convert
+    n = int(numInput)
 
     ratings_list = []
     for i in range(1, n+1):
-        ele = int(input("Rating of player " + str(i) + ": "))
+        ele = input("Rating of player " + str(i) + ": ")
+
+        if not ele.isnumeric():
+            print("Error: rating input must be numeric")
+            exit(-1)  # exit with exit code 1
+
+        # convert element to numeric
+        ele = int(ele)
+
         ratings_list.append(ele)
 
     # get total score of player
