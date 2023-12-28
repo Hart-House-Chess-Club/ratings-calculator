@@ -136,7 +136,10 @@ if __name__ == "__main__":
     all_time_high = int(input("All Time High Rating: "))
 
     # established or provisional rating? (can be removed in the future))
-    rating_type = int(input("Rating Type: (1 for established, 0 for provisional: "))
+    rating_type = int(input("Rating Type: (1 for established, 0 for provisional): "))
+
+    # established or provisional rating? (can be removed in the future))
+    quickTourney = int(input("Quick Tournament: (1 for quick less than 15 minutes total, 0 for classical): "))
 
     if rating_type == 1:
         # new_rating = established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
