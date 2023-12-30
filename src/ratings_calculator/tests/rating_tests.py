@@ -8,13 +8,16 @@ from RatingsCalculator import RatingsCalculator
 
 class TestProfileFunctionality(unittest.TestCase):
     def test_name_input_correct(self) -> None:
-        profile = CFCProfile(150532, False)  # for now, input int
+        profile = CFCProfile(150532, True)  # for now, input int
         profile_dict = profile.get_profile()
         self.assertEqual(profile_dict["player"]["name_first"], "Victor")
         self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
 
         tour_data = profile.get_last_tournaments(5)
         print(tour_data)
+
+        games_played = profile.get_games_played(regular=False)
+        print(games_played)
 
 
 class TestBasicFunctionalities(unittest.TestCase):

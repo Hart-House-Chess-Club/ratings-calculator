@@ -24,7 +24,7 @@ class CFCProfile:
             return page.json()
         else:
             # open the json file and place the file as the value into the page
-            filepath = "player_info.json"
+            filepath = "../player_info.json"
             f = open(filepath)
             data = json.load(f)
             return data
@@ -35,6 +35,23 @@ class CFCProfile:
         :return: json dictionary mapping of the player and its fields
         """
         return self.profile
+
+    def get_games_played(self, regular=True) -> int:
+        """
+        Gets the profile of the current user
+        :return: json dictionary mapping of the player and its fields
+        """
+        games = 0
+        for tournament in self.profile["player"]["events"]:
+            if tournament["rating_type"] == "R" and regular:
+                games += tournament["games_played"]
+            elif tournament["rating_type"] == "Q" and not regular:
+                games += tournament["games_played"]
+            else:
+                # not matching
+                pass
+
+        return games
 
     def get_events_played(self) -> int:
         """
