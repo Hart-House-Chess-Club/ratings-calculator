@@ -10,9 +10,11 @@ class CFCProfile:
     # default constructor for ratings calculator
     def __init__(self, user_id: int, config: Config = Config()) -> None:
         self.user_id = user_id
-        self.profile = self.initialize_profile()
-        self.use_web = config.web_profile
+        self.use_profile = config.use_profile
+        self.web_profile = config.web_profile
         self.quick = config.quick
+
+        self.profile = self.initialize_profile()
         return
 
     def initialize_profile(self) -> dict:
@@ -20,7 +22,7 @@ class CFCProfile:
         Gets the profile of the user
         :return: json dictionary mapping of the player and its fields
         """
-        if self.use_web:
+        if self.web_profile:
             URL = f"https://server.chess.ca/api/player/v1/{self.user_id}"
             page = requests.get(URL)
             return page.json()

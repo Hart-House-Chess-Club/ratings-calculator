@@ -4,19 +4,38 @@ import unittest
 
 from Profile import CFCProfile
 from RatingsCalculator import RatingsCalculator
+from config import Config
 
 
 class TestProfileFunctionality(unittest.TestCase):
-    def test_name_input_correct(self) -> None:
-        profile = CFCProfile(150532, True)  # for now, input int
+    def test_name_input_correct_web(self) -> None:
+        config = Config()
+
+        profile = CFCProfile(150532, config)  # for now, input int
         profile_dict = profile.get_profile()
         self.assertEqual(profile_dict["player"]["name_first"], "Victor")
         self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
 
         tour_data = profile.get_last_tournaments(5)
         print(tour_data)
+        assert len(tour_data) == 5
 
-        games_played = profile.get_games_played(regular=False)
+        games_played = profile.get_games_played()
+        print(games_played)
+
+    def test_name_input_correct_local(self) -> None:
+        config = Config(web_profile=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+        profile_dict = profile.get_profile()
+        self.assertEqual(profile_dict["player"]["name_first"], "Victor")
+        self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
+
+        tour_data = profile.get_last_tournaments(5)
+        print(tour_data)
+        assert len(tour_data) == 5
+
+        games_played = profile.get_games_played()
         print(games_played)
 
 
