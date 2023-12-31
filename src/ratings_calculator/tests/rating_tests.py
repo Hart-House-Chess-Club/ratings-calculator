@@ -64,6 +64,25 @@ class TestProfileFunctionality(unittest.TestCase):
         regular_high = profile.get_lifetime_high()
         assert not regular_high == 2091
 
+    def test_get_national_master_norms_invalid(self) -> None:
+        config = Config(web_profile=False, quick=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        nm_norms = profile.calc_national_master_norms()
+        print(nm_norms)
+        assert nm_norms[0] is False
+
+    def test_get_national_master_norms_valid(self) -> None:
+        config = Config(web_profile=True, quick=False)
+
+        profile = CFCProfile(154677, config)  # for now, input int
+
+        nm_norms = profile.calc_national_master_norms()
+        print(nm_norms)
+
+        assert nm_norms[0] is True
+
 
 class TestBasicFunctionalities(unittest.TestCase):
     def test_default_CFC_ratings_without_bonus(self) -> None:
