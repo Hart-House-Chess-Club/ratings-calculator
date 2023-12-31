@@ -1,3 +1,5 @@
+"""Unit tests for the application"""
+
 import unittest
 # from src.ratings_calculator.Profile import CFCProfile
 # from src.ratings_calculator.RatingsCalculator import RatingsCalculator
