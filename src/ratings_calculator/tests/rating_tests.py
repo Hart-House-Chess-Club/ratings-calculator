@@ -38,6 +38,30 @@ class TestProfileFunctionality(unittest.TestCase):
         games_played = profile.get_games_played()
         print(games_played)
 
+    def test_get_lifetime_high_regular(self) -> None:
+        config = Config(web_profile=False, quick=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert regular_high == 2160
+
+    def test_get_lifetime_high_quick(self) -> None:
+        config = Config(web_profile=False, quick=True)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert regular_high == 2092
+
+    def test_get_lifetime_high_fail(self) -> None:
+        config = Config(web_profile=False, quick=True)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert not regular_high == 2091
+
 
 class TestBasicFunctionalities(unittest.TestCase):
     def test_default_CFC_ratings_without_bonus(self) -> None:

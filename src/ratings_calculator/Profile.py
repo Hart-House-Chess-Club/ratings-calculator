@@ -77,10 +77,10 @@ class CFCProfile:
             search_name = "quick_indicator"
 
         # if the regular indicator is null, that means they haven't played enough games
-        if self.profile[search_name] == []:
+        if self.profile["player"][search_name] == []:
             return 0
         else:
-            return self.profile[search_name]
+            return self.profile["player"][search_name]
 
     def get_last_tournaments(self, num_tournaments: int) -> []:
         """
