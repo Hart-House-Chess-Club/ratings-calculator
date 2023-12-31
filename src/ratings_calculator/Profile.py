@@ -3,6 +3,7 @@ import json
 import requests
 from config import Config
 
+
 class CFCProfile:
     """User id of the user that we are trying to get data for"""
 
@@ -17,7 +18,6 @@ class CFCProfile:
     def initialize_profile(self) -> dict:
         """
         Gets the profile of the user
-        :param request: boolean indicating whether to use the web to search for this fvalue or not.
         :return: json dictionary mapping of the player and its fields
         """
         if self.use_web:
