@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../HH-registration-data/.idea/HH-registration-data.iml" filepath="$PROJECT_DIR$/../HH-registration-data/.idea/HH-registration-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cfc-status/.idea/cfc-status.iml" filepath="$PROJECT_DIR$/../cfc-status/.idea/cfc-status.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../fen-to-image/.idea/fen-to-image.iml" filepath="$PROJECT_DIR$/../fen-to-image/.idea/fen-to-image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ratings-calculator.iml" filepath="$PROJECT_DIR$/.idea/ratings-calculator.iml" />
+    </modules>
+  </component>
+</project>

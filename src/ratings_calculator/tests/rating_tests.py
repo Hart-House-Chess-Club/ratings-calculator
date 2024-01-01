@@ -1,17 +1,87 @@
+"""Unit tests for the application"""
+
 import unittest
-from src.ratings_calculator.Profile import CFCProfile
-from src.ratings_calculator.RatingsCalculator import RatingsCalculator
+# from src.ratings_calculator.Profile import CFCProfile
+# from src.ratings_calculator.RatingsCalculator import RatingsCalculator
+
+from Profile import CFCProfile
+from RatingsCalculator import RatingsCalculator
+from config import Config
 
 
 class TestProfileFunctionality(unittest.TestCase):
-    def test_name_input_correct(self) -> None:
-        profile = CFCProfile(150532, False)  # for now, input int
+    def test_name_input_correct_web(self) -> None:
+        config = Config()
+
+        profile = CFCProfile(150532, config)  # for now, input int
         profile_dict = profile.get_profile()
         self.assertEqual(profile_dict["player"]["name_first"], "Victor")
         self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
 
         tour_data = profile.get_last_tournaments(5)
         print(tour_data)
+        assert len(tour_data) == 5
+
+        games_played = profile.get_games_played()
+        print(games_played)
+
+    def test_name_input_correct_local(self) -> None:
+        config = Config(web_profile=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+        profile_dict = profile.get_profile()
+        self.assertEqual(profile_dict["player"]["name_first"], "Victor")
+        self.assertEqual(profile_dict["player"]["name_last"], "Zheng")
+
+        tour_data = profile.get_last_tournaments(5)
+        print(tour_data)
+        assert len(tour_data) == 5
+
+        games_played = profile.get_games_played()
+        print(games_played)
+
+    def test_get_lifetime_high_regular(self) -> None:
+        config = Config(web_profile=False, quick=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert regular_high == 2160
+
+    def test_get_lifetime_high_quick(self) -> None:
+        config = Config(web_profile=False, quick=True)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert regular_high == 2092
+
+    def test_get_lifetime_high_fail(self) -> None:
+        config = Config(web_profile=False, quick=True)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        regular_high = profile.get_lifetime_high()
+        assert not regular_high == 2091
+
+    def test_get_national_master_norms_invalid(self) -> None:
+        config = Config(web_profile=False, quick=False)
+
+        profile = CFCProfile(150532, config)  # for now, input int
+
+        nm_norms = profile.calc_national_master_norms()
+        print(nm_norms)
+        assert nm_norms[0] is False
+
+    def test_get_national_master_norms_valid(self) -> None:
+        config = Config(web_profile=True, quick=False)
+
+        profile = CFCProfile(154677, config)  # for now, input int
+
+        nm_norms = profile.calc_national_master_norms()
+        print(nm_norms)
+
+        assert nm_norms[0] is True
 
 
 class TestBasicFunctionalities(unittest.TestCase):
