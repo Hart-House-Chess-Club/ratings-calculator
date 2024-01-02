@@ -51,17 +51,21 @@ class FidePlayerData:
         """Generates a list of norm eligble tournaments in the given country
 
         """
+
+        print("Running")
+
         rating_period = ratingperiod.RatingPeriod(
-            "CAN",
-            "2023-12-01",
-            True,
-            True
+            "ESP",
+            "2013-01-01"
         )
 
-        output_file = "2023-12-01-csv.csv"
+        # output_file = "2023-12-01-csv.csv"
+        rating_period.save()
 
+        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "output_file.csv"
         rating_period.export(output_file, "csv")
 
 
 data = FidePlayerData()
+
 data.generate_player_data()
