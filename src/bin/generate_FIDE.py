@@ -12,6 +12,8 @@ Player Data
 
 """
 from pathlib import Path
+from chess import Board
+from fideparser import tournament, ratingperiod
 
 country = "CAN"
 
@@ -49,4 +51,17 @@ class FidePlayerData:
         """Generates a list of norm eligble tournaments in the given country
 
         """
-        pass
+        rating_period = ratingperiod.RatingPeriod(
+            "CAN",
+            "2023-12-01",
+            True,
+            True
+        )
+
+        output_file = "2023-12-01-csv.csv"
+
+        rating_period.export(output_file, "csv")
+
+
+data = FidePlayerData()
+data.generate_player_data()
