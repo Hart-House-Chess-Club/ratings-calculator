@@ -15,8 +15,6 @@ from pathlib import Path
 from chess import Board
 from fideparser import tournament, ratingperiod
 
-country = "CAN"
-
 
 class FideAssets:
     """Generates a list of norm eligble tournaments in the given country"""
@@ -51,19 +49,40 @@ class FidePlayerData:
         """Generates a list of norm eligble tournaments in the given country
 
         """
+        print("Running generate player data")
 
-        print("Running")
+        country = "CAN"
+        period = "2023-12-01"
+
+        arb_data = False
+        report_data = True
 
         rating_period = ratingperiod.RatingPeriod(
-            "ESP",
-            "2013-01-01"
+            country,
+            period,
+            arbiters_data=arb_data,
+            report_data=report_data
         )
 
-        # output_file = "2023-12-01-csv.csv"
+        output_file = f"{period}-{country}"
+
+        # append to the output file name
+        if report_data:
+            output_file += "-report-true"
+        else:
+            output_file += "-report-false"
+
+        if arb_data:
+            output_file += "-arb-true"
+        else:
+            output_file += "-arb-false"
+
         rating_period.save()
 
-        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "output_file.csv"
+        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / f"{output_file}.csv"
         rating_period.export(output_file, "csv")
+
+        print("Finished generating player data")
 
 
 data = FidePlayerData()
