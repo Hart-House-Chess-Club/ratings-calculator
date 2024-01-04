@@ -81,7 +81,7 @@ class FidePlayerData:
 
         rating_period.save()
 
-        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / f"{output_file}.csv"
+        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "fide" / f"{output_file}.csv"
         rating_period.export(output_file, "csv")
 
         print("Finished generating player data")
