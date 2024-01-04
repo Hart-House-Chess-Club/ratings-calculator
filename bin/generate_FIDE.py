@@ -44,35 +44,37 @@ class FideAssets:
 
 
 class FidePlayerData:
-    """Generates FIDE player data"""
-    def generate_player_data(self) -> None:
-        """Generates a list of norm eligble tournaments in the given country
+    """Using fideparser library to generate files for exporting FIDE data.
+    """
+    def __init__(self, country: str, arb_data: bool, report_data: bool):
+        """ Initialization variables
+        """
+        self.country = country
+        self.arb_data = arb_data
+        self.report_data = report_data
 
+    """Generates FIDE player data"""
+    def generate_player_data(self, period: str) -> None:
+        """Generates a list of all tournaments in the given country
         """
         print("Running generate player data")
 
-        country = "CAN"
-        period = "2023-12-01"
-
-        arb_data = False
-        report_data = True
-
         rating_period = ratingperiod.RatingPeriod(
-            country,
+            self.country,
             period,
-            arbiters_data=arb_data,
-            report_data=report_data
+            arbiters_data=self.arb_data,
+            report_data=self.report_data
         )
 
-        output_file = f"{period}-{country}"
+        output_file = f"{period}-{self.country}"
 
         # append to the output file name
-        if report_data:
+        if self.report_data:
             output_file += "-report-true"
         else:
             output_file += "-report-false"
 
-        if arb_data:
+        if self.arb_data:
             output_file += "-arb-true"
         else:
             output_file += "-arb-false"
@@ -84,7 +86,19 @@ class FidePlayerData:
 
         print("Finished generating player data")
 
+    def generate_full_year(self, year: str):
+        """Generates a list of all tournaments this year in the given country
+        """
+        period = ""
 
-data = FidePlayerData()
+        # iterate through 12 months
+        for i in range(1, 13):
+            # format for the period is yyyy-mm-dd
+            period = year + "-" + str.zfill(str(i), 2) + "-" + "01"
 
-data.generate_player_data()
+            self.generate_player_data(period)
+
+
+data = FidePlayerData("CAN", False, True)
+
+data.generate_full_year("2023")
