@@ -128,9 +128,3 @@ class CFCProfile:
             title_valid = True
 
         return title_valid, perf_tournaments
-
-
-class FIDEProfile:
-    """Gets user id data for FIDE profile"""
-
-    pass

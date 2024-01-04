@@ -74,6 +74,7 @@ class TestProfileFunctionality(unittest.TestCase):
         assert nm_norms[0] is False
 
     def test_get_national_master_norms_valid(self) -> None:
+        # success fnd nm norms
         config = Config(web_profile=True, quick=False)
 
         profile = CFCProfile(154677, config)  # for now, input int
@@ -82,6 +83,19 @@ class TestProfileFunctionality(unittest.TestCase):
         print(nm_norms)
 
         assert nm_norms[0] is True
+        assert len(nm_norms[1]) >= 3
+
+    def test_get_national_master_norms_false(self) -> None:
+        # fail nm norms finding
+        config = Config(web_profile=True, quick=False)
+
+        profile = CFCProfile(152240, config)  # for now, input int
+
+        nm_norms = profile.calc_national_master_norms()
+        print(nm_norms)
+
+        assert nm_norms[0] is False
+        assert len(nm_norms[1]) < 3
 
 
 class TestBasicFunctionalities(unittest.TestCase):
