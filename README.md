@@ -91,7 +91,7 @@ information onto a web service that will automatically calculate ratings. Anothe
 to let our members play each other in-person.
 
 This program runs by calculating CFC ratings from the publicly accessible CFC algorithm viewable on
-the [CFC handbook](https://github.com/Hart-House-Chess-Club/ratings-calculator/blob/main/CFC%20-%20CFC%20Handbook%20(to%202014).pdf)
+the [CFC handbook](https://github.com/Hart-House-Chess-Club/ratings-calculator/blob/main/cfc_handbook.pdf)
 .
 
 A future goal is to use the public CFC API to connect to user's CFC ID and run various algorithms to automate the
