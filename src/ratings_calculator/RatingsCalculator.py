@@ -1,3 +1,8 @@
+"""Ratings Calculator is a class that calculates ratings, cfc-style
+
+@copywrite @ 2024, Hart House Chess Club
+"""
+
 import math
 from csv import reader
 

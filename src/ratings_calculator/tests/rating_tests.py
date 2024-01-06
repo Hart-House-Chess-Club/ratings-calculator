@@ -73,6 +73,9 @@ class TestProfileFunctionality(unittest.TestCase):
         print(nm_norms)
         assert nm_norms[0] is False
 
+        print("National Master Title Unsuccessfully Achieved")
+
+
     def test_get_national_master_norms_valid(self) -> None:
         # success fnd nm norms
         config = Config(web_profile=True, quick=False)
@@ -84,6 +87,8 @@ class TestProfileFunctionality(unittest.TestCase):
 
         assert nm_norms[0] is True
         assert len(nm_norms[1]) >= 3
+
+        print("National Master Title Successfully Achieved")
 
     def test_get_national_master_norms_false(self) -> None:
         # fail nm norms finding
