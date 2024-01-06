@@ -43,6 +43,10 @@ class CFCProfile:
             except Exception:
                 print(f"Failed to open or load player_info_{self.user_id}.json")
 
+    def save_profile(self, file_name: str, player_info: str) -> None:
+        """Saves the profile of the user to the file name """
+        pass
+
     def get_profile(self) -> dict:
         """
         Gets the profile of the current user
@@ -133,6 +137,35 @@ class CFCProfile:
                        x["rating_type"] == "R"]
 
         min_rating_reached = [x for x in self.profile["player"]["events"] if x["rating_post"] >= 2200]
+
+        if len(perf_tournaments) >= 3 and min_rating_reached:
+            title_valid = True
+
+        return title_valid, perf_tournaments
+
+    def calc_candidate_national_master_norms(self) -> tuple:
+        """
+        National Master can be achieved by achieving a minimum 2100 and 3 performances of over 2200. This can happen at
+        any point in one's chess career. Titles can also be awarded retroactively.
+
+        Some additional notes:
+            - player must not be a foreign flag
+            - only regular ratings count
+            - player must have played at least 5 games
+            - matches may not be used as a norm
+            - achieved at least 2200 in their lifetime
+
+        :return: A tuple, with index 0 indicating whether they have achieved National Master, and
+        index 1 indicating the tournaments which account for the National Master title.
+        """
+        title_valid = False
+
+        perf_tournaments = [x for x in self.profile["player"]["events"] if
+                            x["rating_perf"] >= 2200 and
+                            x["games_played"] >= 5 and
+                            x["rating_type"] == "R"]
+
+        min_rating_reached = [x for x in self.profile["player"]["events"] if x["rating_post"] >= 2100]
 
         if len(perf_tournaments) >= 3 and min_rating_reached:
             title_valid = True
