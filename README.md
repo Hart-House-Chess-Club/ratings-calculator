@@ -105,49 +105,57 @@ finding user data aspect.
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and
-running follow these simple example steps.
+This is how you can get started using, developing, or configuring our project.
 
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 
-* npm
-  ```sh
-  npm install npm@latest -g
+* pip
   ```
+  pip install --upgrade
+  ```
+  - The latest version of pip available
+
+* chess
+  ```sh
+  pip install chess
+  ```
+  - python library chess
+
+* requests
+  ```
+  pip install requests
+  ```
+  - python library requests
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't
-rely on any external dependencies or services._
+_Below is the installation process for running our code locally. We have configured our program to run on our aws servers_
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/Hart-House-Chess-Club/ratings-calculator.git
    ```
-3. Install NPM packages
+3. Install python 
    ```sh
-   npm install
+   pip install upgrade python
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Launch the program 
+   ```
+   python ratings-calculator.py --run
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos
-work well in this space. You may also link to more resources.
+This project is the beginning of many related projects part of the Hart House Chess Club's development of open-source Canadian chess software.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,19 +165,18 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [ ] Add program configuration onto a web service
+- [ ] Add configuration for FIDE ratings. 
+- [ ] Add configuration for API from chess.ca 
+- [ ] Add configuration for chess.com api
+- [ ] Add integration with lichess.org
+- [ ] Multi-language Support (must be available in french for CFC)
+    - [ ] French
 
 See the [open issues](https://github.com/Hart-House-Chess-Club/ratings-calculator/issues) for a full list of proposed features (
 and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTRIBUTING -->
@@ -201,17 +208,24 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- CONTACT -->
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Hart House Chess Club Executive Board
+- [harthousechess.com](https://harthousechess.com) 
+- [hhchess@studentorg.utoronto.ca](mailto:hhchess@studentorg.utoronto.ca)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Victor Zheng 
+- [@victor-zheng-codes](https://github.com/victor-zheng-codes)
+
+Ahmed Khalf 
+- [@ahmedkhalf](https://github.com/ahmedkhalf)
+
+
+Project Link: [https://github.com/Hart-House-Chess-Club/ratings-calculator](https://github.com/Hart-House-Chess-Club/ratings-calculator)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- ACKNOWLEDGMENTS -->
@@ -221,14 +235,8 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites
 to kick things off!
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Chess Federation of Canada](https://chess.ca)
+* [lichess.org](https://lichess.org)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -263,6 +271,3 @@ to kick things off!
 
 [product-screenshot]: images/screenshot.png
 
-Started in Fall 2022 with Hart House Chess Club Executive Board member Victor Zheng (@victor-zheng-codes).
-
-Updated in December 2023.
