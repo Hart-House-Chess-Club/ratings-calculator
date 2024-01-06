@@ -1,6 +1,8 @@
 """Class to get cfc profile information of the user"""
 import json
 import requests
+from urllib3.exceptions import NameResolutionError
+
 from config import Config
 
 
@@ -23,9 +25,13 @@ class CFCProfile:
         :return: json dictionary mapping of the player and its fields
         """
         if self.web_profile:
-            URL = f"https://server.chess.ca/api/player/v1/{self.user_id}"
-            page = requests.get(URL)
-            return page.json()
+            # noinspection PyBroadException
+            try:
+                URL = f"https://server.chess.ca/api/player/v1/{self.user_id}"
+                page = requests.get(URL)
+                return page.json()
+            except Exception:
+                print("Failed to connect to API, check connection to requests library")
         else:
             # open the json file and place the file as the value into the page
             filepath = f"../player_info_{self.user_id}.json"
