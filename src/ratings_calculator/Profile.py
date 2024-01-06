@@ -33,11 +33,15 @@ class CFCProfile:
             except Exception:
                 print("Failed to connect to API, check connection to requests library")
         else:
-            # open the json file and place the file as the value into the page
-            filepath = f"../player_info_{self.user_id}.json"
-            f = open(filepath)
-            data = json.load(f)
-            return data
+            # noinspection PyBroadException
+            try:
+                # open the json file and place the file as the value into the page
+                filepath = f"../player_info_{self.user_id}.json"
+                f = open(filepath)
+                data = json.load(f)
+                return data
+            except Exception:
+                print(f"Failed to open or load player_info_{self.user_id}.json")
 
     def get_profile(self) -> dict:
         """
