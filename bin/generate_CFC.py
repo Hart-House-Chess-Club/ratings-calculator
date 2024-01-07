@@ -50,11 +50,10 @@ class CFCAssets:
 class CFCPlayerData:
     """Using fideparser library to generate files for exporting FIDE data.
     """
-    def __init__(self, arb_data: bool, report_data: bool):
+    def __init__(self):
         """ Initialization variables
         """
-        self.arb_data = arb_data
-        self.report_data = report_data
+        pass
 
     """Generates CFC player data"""
     def generate_player_data(self, player_id: int) -> None:
@@ -64,14 +63,13 @@ class CFCPlayerData:
 
         profile = CFCProfile(player_id)
 
-        profile.save_profile()
-
         output_file = f"cfc_player_info_{player_id}"
 
         output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"{output_file}.json"
-        # file.export(output_file, "csv")
 
-        print("Finished generating CFC player data")
+        profile.save_profile(str(output_file))
+
+        print("Finished generating CFC player data to ", output_file)
 
     def generate_all_players(self, max_id: int):
         """Generates a list of all tournaments this year in the given country
@@ -84,5 +82,5 @@ class CFCPlayerData:
             self.generate_player_data(i)
 
 
-data = CFCPlayerData(False, True)
-# data.generate_all_players()
+data = CFCPlayerData()
+data.generate_player_data(150768)

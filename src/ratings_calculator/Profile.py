@@ -46,7 +46,8 @@ class CFCProfile:
     def save_profile(self, file_path: str) -> None:
         """Saves the profile of the user to the file name """
         f = open(file_path, "w")
-        f.write(str(self.profile))
+        json_object = json.dumps(self.profile, indent=4)
+        f.write(json_object)
         f.close()
 
     def get_profile(self) -> dict:
