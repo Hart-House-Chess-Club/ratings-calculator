@@ -160,7 +160,7 @@ class RatingsCalculator:
         """
         # file is recommend to be in the following format: starting rank, Name of Player, CFC ID
         # information of the event
-        file_name = "C:\\Users\\zheng\\PycharmProjects\\ratings-calculator\\ExpectedScores.csv"
+        file_name = "/assets/ExpectedScores.csv"
         expected_scores_higher = {}
 
         with open(file_name, 'r') as f:
