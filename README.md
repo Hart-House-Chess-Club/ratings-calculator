@@ -133,7 +133,7 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-_Below is the installation process for running our code locally. We have configured our program to run on our aws servers_
+Below is the installation process for running our code locally. 
 
 1. Clone the repo
    ```sh
