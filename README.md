@@ -22,10 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
+[![GPL License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -111,9 +108,14 @@ This is how you can get started using, developing, or configuring our project.
 
 This is an example of how to list things you need to use the software and how to install them.
 
+* python
+  ```
+  Python version 3.10 should be installed
+  ```
+
 * pip
   ```
-  pip install --upgrade
+  python get-pip.py
   ```
   - The latest version of pip available
 
@@ -133,18 +135,13 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is the installation process for running our code locally. We have configured our program to run on our aws servers_
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/Hart-House-Chess-Club/ratings-calculator.git
    ```
-3. Install python 
-   ```sh
-   pip install upgrade python
+2. Launch the program 
    ```
-4. Launch the program 
-   ```
-   python ratings-calculator.py --run
+   python main.py
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -203,7 +200,7 @@ simply open an issue with the tag "enhancement". Don't forget to give the projec
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GPL License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -231,9 +228,6 @@ Project Link: [https://github.com/Hart-House-Chess-Club/ratings-calculator](http
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites
-to kick things off!
 
 * [Chess Federation of Canada](https://chess.ca)
 * [lichess.org](https://lichess.org)
