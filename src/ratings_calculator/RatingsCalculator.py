@@ -27,14 +27,17 @@ class RatingsCalculator:
             ave_rating += rating
         return ave_rating / len(ratings)
 
-    def provisional_unrated_players(self, ratings: list, wins: int, losses: int, games_played: int) -> object:
+    def performance_rating(self, ratings: list, wins: float, losses: int, games_played: int) -> object:
         """
         wins is the number of wins,
         losses is the number of losses
         games_played is the number of games
         ratings is the list of opponent's ratings
+
+        This calculation is used for provisional_unrated_players too
         """
         Rc = self.average_rating(ratings)
+
         # Rp = Rc + 400 (W - L) / N
         Rp = Rc + 400 * (wins - losses) / games_played
         return Rp

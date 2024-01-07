@@ -116,6 +116,9 @@ if __name__ == "__main__":
     for i in range(1, n + 1):
         ele = input("Rating of player " + str(i) + ": ")
 
+        # strip whitespace
+        ele = ele.strip()
+
         if not ele.isnumeric():
             print("Error: rating input must be numeric")
             exit(-1)  # exit with exit code 1
@@ -143,8 +146,11 @@ if __name__ == "__main__":
 
     if rating_type == 1:
         # new_rating = established_ratings(1450, 1450, 4, [1237, 1511, 1214, 1441, 1579, 2133])
-        calc_new_rating = ratingsCalc.established_ratings(all_time_high, current_rating, (wins + draws), ratings_list)
+        calc_new_rating = ratingsCalc.established_ratings(all_time_high, current_rating, (wins + draws * 0.5), ratings_list)
+        perf_rating = ratingsCalc.performance_rating(ratings_list, wins, losses, len(ratings_list))
+        print("Performance Rating: ", perf_rating)
     else:
-        calc_new_rating = ratingsCalc.provisional_unrated_players(ratings_list, n, wins, losses)
+        # TODO: test provisional ratings
+        calc_new_rating = ratingsCalc.performance_rating(ratings_list, wins, losses, n)
 
     print("New Rating is: ", calc_new_rating)

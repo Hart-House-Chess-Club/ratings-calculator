@@ -16,6 +16,8 @@ Player Data
 """
 from pathlib import Path
 from fideparser import tournament, ratingperiod
+from src.ratings_calculator.Profile import CFCProfile
+from src.ratings_calculator.config import Config
 
 
 class CFCAssets:
@@ -54,42 +56,33 @@ class CFCPlayerData:
         self.arb_data = arb_data
         self.report_data = report_data
 
-    """Generates FIDE player data"""
-    def generate_player_data(self, period: str) -> None:
+    """Generates CFC player data"""
+    def generate_player_data(self, player_id: int) -> None:
         """Generates a list of all tournaments in the given country
         """
         print("Running generate player data")
 
-        output_file = f"{period}-"
+        profile = CFCProfile(player_id)
 
-        # append to the output file name
-        if self.report_data:
-            output_file += "-report-true"
-        else:
-            output_file += "-report-false"
+        profile.save_profile()
 
-        if self.arb_data:
-            output_file += "-arb-true"
-        else:
-            output_file += "-arb-false"
+        output_file = f"cfc_player_info_{player_id}"
 
-        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "fide" / f"{output_file}.csv"
+        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"{output_file}.json"
         # file.export(output_file, "csv")
 
-        print("Finished generating player data")
+        print("Finished generating CFC player data")
 
-    def generate_full_year(self, year: str):
+    def generate_all_players(self, max_id: int):
         """Generates a list of all tournaments this year in the given country
         """
         period = ""
 
         # iterate through 12 months
-        for i in range(1, 13):
+        for i in range(max_id + 1):
             # format for the period is yyyy-mm-dd
-            period = year + "-" + str.zfill(str(i), 2) + "-" + "01"
-
-            self.generate_player_data(period)
+            self.generate_player_data(i)
 
 
 data = CFCPlayerData(False, True)
-data.generate_full_year("2023")
+# data.generate_all_players()

@@ -43,10 +43,10 @@ class CFCProfile:
             except Exception:
                 print(f"Failed to open or load player_info_{self.user_id}.json")
 
-    def save_profile(self, file_path: str, player_info: str) -> None:
+    def save_profile(self, file_path: str) -> None:
         """Saves the profile of the user to the file name """
         f = open(file_path, "w")
-        f.write(player_info)
+        f.write(str(self.profile))
         f.close()
 
     def get_profile(self) -> dict:
