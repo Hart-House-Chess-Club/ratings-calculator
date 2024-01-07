@@ -5,6 +5,7 @@
 
 import math
 from csv import reader
+from pathlib import Path
 
 
 class RatingsCalculator:
@@ -160,7 +161,9 @@ class RatingsCalculator:
         """
         # file is recommend to be in the following format: starting rank, Name of Player, CFC ID
         # information of the event
-        file_name = "/assets/ExpectedScores.csv"
+
+        file_name = Path(__file__).parent / "assets" / "ExpectedScores.csv"
+
         expected_scores_higher = {}
 
         with open(file_name, 'r') as f:
