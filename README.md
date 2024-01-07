@@ -216,10 +216,6 @@ Hart House Chess Club Executive Board
 Victor Zheng 
 - [@victor-zheng-codes](https://github.com/victor-zheng-codes)
 
-Ahmed Khalf 
-- [@ahmedkhalf](https://github.com/ahmedkhalf)
-
-
 Project Link: [https://github.com/Hart-House-Chess-Club/ratings-calculator](https://github.com/Hart-House-Chess-Club/ratings-calculator)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
