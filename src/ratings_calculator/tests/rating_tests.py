@@ -75,7 +75,6 @@ class TestProfileFunctionality(unittest.TestCase):
 
         print("National Master Title Unsuccessfully Achieved")
 
-
     def test_get_national_master_norms_valid(self) -> None:
         # success fnd nm norms
         config = Config(web_profile=True, quick=False)

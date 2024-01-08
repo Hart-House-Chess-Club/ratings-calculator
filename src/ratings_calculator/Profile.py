@@ -1,7 +1,7 @@
 """Class to get cfc profile information of the user"""
 import json
 import requests
-from urllib3.exceptions import NameResolutionError
+from pathlib import Path
 
 from config import Config
 
@@ -33,15 +33,15 @@ class CFCProfile:
             except Exception:
                 print("Failed to connect to API, check connection to requests library")
         else:
+            file_path = Path(__file__).parent / "assets" / "cache" / "cfc" / f"cfc_player_info_{self.user_id}.json"
             # noinspection PyBroadException
             try:
                 # open the json file and place the file as the value into the page
-                filepath = f"../player_info_{self.user_id}.json"
-                f = open(filepath)
+                f = open(file_path)
                 data = json.load(f)
                 return data
             except Exception:
-                print(f"Failed to open or load player_info_{self.user_id}.json")
+                print(f"Failed to open or load {filepath}")
 
     def save_profile(self, file_path: str) -> None:
         """Saves the profile of the user to the file name """
@@ -135,9 +135,9 @@ class CFCProfile:
         title_valid = False
 
         perf_tournaments = [x for x in self.profile["player"]["events"] if
-                       x["rating_perf"] >= 2300 and
-                       x["games_played"] >= 5 and
-                       x["rating_type"] == "R"]
+                            x["rating_perf"] >= 2300 and
+                            x["games_played"] >= 5 and
+                            x["rating_type"] == "R"]
 
         min_rating_reached = [x for x in self.profile["player"]["events"] if x["rating_post"] >= 2200]
 
