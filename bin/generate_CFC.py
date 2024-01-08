@@ -18,7 +18,7 @@ from pathlib import Path
 from fideparser import tournament, ratingperiod
 from src.ratings_calculator.Profile import CFCProfile
 from src.ratings_calculator.config import Config
-
+import requests
 
 class CFCAssets:
     """Generates a list of norm eligble tournaments in the given country"""
@@ -47,10 +47,44 @@ class CFCAssets:
         pass
 
 
+class TDList:
+    """
+    Get TD List file from public cfc api at https://storage.googleapis.com/cfc-public/data/tdlist.txt
+    """
+
+    def __init__(self, get_new_data: bool) -> None:
+        """ Initialize data
+        :param get_new_data: indicates whether to get new data from the cfc api or use the current one in the cache.
+        """
+
+        # if get_new_data, then save the latest files.
+        if get_new_data:
+            self.save_td_list()
+
+    def save_td_list(self) -> None:
+        """
+        Saves the td list file into the cache
+        """
+
+        file_loc = "https://storage.googleapis.com/cfc-public/data/tdlist.txt"
+
+        # use requests library to save the file link into the cache.
+        # noinspection PyBroadException
+        try:
+            r = requests.get(file_loc, allow_redirects=True)
+
+            # output file will be in cache
+            output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"tdlist.txt"
+            open(output_file, 'wb').write(r.content)
+
+        except Exception:
+            print("Failed to connect to API, check connection to requests library")
+
+
 class CFCPlayerData:
     """Using fideparser library to generate files for exporting FIDE data.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """ Initialization variables
         """
         pass
@@ -74,13 +108,11 @@ class CFCPlayerData:
     def generate_all_players(self, max_id: int):
         """Generates a list of all tournaments this year in the given country
         """
-        period = ""
 
-        # iterate through 12 months
+        # iterate through all valid ids. Get ids from tdlist file
         for i in range(max_id + 1):
             # format for the period is yyyy-mm-dd
             self.generate_player_data(i)
-
 
 data = CFCPlayerData()
 data.generate_player_data(150768)
