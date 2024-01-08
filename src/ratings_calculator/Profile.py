@@ -41,7 +41,7 @@ class CFCProfile:
                 data = json.load(f)
                 return data
             except Exception:
-                print(f"Failed to open or load {filepath}")
+                print(f"Failed to open or load {file_path}")
 
     def save_profile(self, file_path: str) -> None:
         """Saves the profile of the user to the file name """
