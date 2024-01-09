@@ -57,6 +57,9 @@ class TDList:
         :param get_new_data: indicates whether to get new data from the cfc api or use the current one in the cache.
         """
 
+        self.output_file = Path(
+            __file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"tdlist.txt"
+
         # if get_new_data, then save the latest files.
         if get_new_data:
             self.save_td_list()
@@ -74,11 +77,21 @@ class TDList:
             r = requests.get(file_loc, allow_redirects=True)
 
             # output file will be in cache
-            output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"tdlist.txt"
-            open(output_file, 'wb').write(r.content)
+            open(self.output_file, 'wb').write(r.content)
 
         except Exception:
             print("Failed to connect to API, check connection to requests library")
+
+    def generate_cfc_ids_list(self) -> []:
+        """
+        Generate and return a list of all active cfc ids
+        """
+
+        id_list = []
+        with open(self.output_file, 'r') as f:
+            while f.readline() != "":
+                id_list.append()
+
 
 
 class CFCPlayerData:
