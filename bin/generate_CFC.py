@@ -88,10 +88,14 @@ class TDList:
         """
 
         id_list = []
-        with open(self.output_file, 'r') as f:
-            while f.readline() != "":
-                id_list.append()
+        file = open(self.output_file, 'r')
+        lines = file.readlines()
 
+        count = 0
+        # Strips the newline character
+        for line in lines:
+            count += 1
+            print("Line{}: {}".format(count, line.split(",")[0]))
 
 
 class CFCPlayerData:
@@ -127,5 +131,8 @@ class CFCPlayerData:
             # format for the period is yyyy-mm-dd
             self.generate_player_data(i)
 
-data = CFCPlayerData()
-data.generate_player_data(150768)
+# data = CFCPlayerData()
+# data.generate_player_data(150768)
+
+td_list = TDList(True)
+td_list.generate_cfc_ids_list()
