@@ -89,13 +89,20 @@ class TDList:
 
         id_list = []
         file = open(self.output_file, 'r')
+        # file = file.read()
+
         lines = file.readlines()
 
         count = 0
         # Strips the newline character
         for line in lines:
+            # skip line 1
+            if count != 0:
+                id_list.append(line.split(",")[0])
+
             count += 1
-            print("Line{}: {}".format(count, line.split(",")[0]))
+
+        return id_list
 
 
 class CFCPlayerData:
@@ -134,5 +141,11 @@ class CFCPlayerData:
 # data = CFCPlayerData()
 # data.generate_player_data(150768)
 
+
 td_list = TDList(True)
-td_list.generate_cfc_ids_list()
+user_ids = td_list.generate_cfc_ids_list()
+print(user_ids)
+
+data = CFCPlayerData()
+for id in user_ids:
+    data.generate_player_data(int(id))
