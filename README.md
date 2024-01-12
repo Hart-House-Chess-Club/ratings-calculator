@@ -81,15 +81,15 @@
 
 ## About The Project
 
-![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
+![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/CFC_ratings_over_time.png)
+
 
 This program was created to calculate CFC ratings for our members. A future implementation would be in embeding this
 information onto a web service that will automatically calculate ratings. Another idea is to build a HHCC rating system
 to let our members play each other in-person.
 
 This program runs by calculating CFC ratings from the publicly accessible CFC algorithm viewable on
-the [CFC handbook](https://github.com/Hart-House-Chess-Club/ratings-calculator/blob/main/docs/cfc_handbook.pdf)
-.
+the [CFC handbook](https://github.com/Hart-House-Chess-Club/ratings-calculator/blob/main/docs/cfc_handbook.pdf).
 
 A future goal is to use the public CFC API to connect to user's CFC ID and run various algorithms to automate the
 finding user data aspect.
@@ -130,6 +130,9 @@ This is an example of how to list things you need to use the software and how to
   pip install requests
   ```
   - python library requests
+
+![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
+
 
 ### Installation
 
