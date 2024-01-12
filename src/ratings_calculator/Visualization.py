@@ -27,25 +27,19 @@ class Visualization:
 
         reg_events, quick_events = cfc_profile.get_events()
 
-        dateReg = [int(event.date.year) for event in reg_events]
+        dateReg = [float(event.date.year + event.date.month/12 + event.date.day/300)  for event in reg_events]
         rtgReg = [event.rating_after for event in reg_events]
-        dateQuick = [int(event.date.year) for event in quick_events]
+        dateQuick = [float(event.date.year + event.date.month/12 + event.date.day/300) for event in quick_events]
         rtgQuick = [event.rating_after for event in quick_events]
 
-        fig, ax = plt.subplots(figsize=(5, 3))
-
-        # dateReg = [2000, 2001, 2002, 2003, 2004, 2005, 2006]
-        # rtgReg = [200, 500, 500, 600, 1000, 2000, 2400]
-        # dateQuick = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2020]
-        # rtgQuick = [300, 400, 500, 600, 1030, 2200, 2300, 2350]
-
-        labels=['Regular Rating', 'Quick Rating',]
+        fig, ax = plt.subplots(figsize=(10, 6))
 
         ax.plot(dateReg, rtgReg, ls="solid", label="Regular Rating")
         ax.plot(dateQuick, rtgQuick, ls="solid", label="Quick Rating")
-        ax.set_title('CFC Regular and Quick Ratings Over Time')
+        ax.set_title('CFC Regular and Quick Ratings Over Time for id ' + str(id))
         ax.legend(loc='upper left')
-        ax.set_ylabel('Rating')
+        ax.set_ylabel('CFC Rating')
+        ax.set_xlabel('Year')
         ax.set_xlim(xmin=min(dateQuick + dateReg), xmax=max(dateQuick + dateReg))
         fig.tight_layout()
         plt.show()
