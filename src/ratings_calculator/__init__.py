@@ -1,2 +1,3 @@
-"""Initialization file for python project"""
+"""project initialization
+"""
 __version__ = "0.0.1"

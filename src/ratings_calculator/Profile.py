@@ -2,9 +2,16 @@
 import json
 import requests
 from pathlib import Path
+from datetime import datetime
 
 from config import Config
 
+class Event:
+    def __init__(self):
+        self.date = None
+        self.name = ""
+        self.rating_before = 0
+        self.rating_after = 0
 
 class CFCProfile:
     """User id of the user that we are trying to get data for"""
@@ -49,6 +56,39 @@ class CFCProfile:
         json_object = json.dumps(self.profile, indent=4)
         f.write(json_object)
         f.close()
+
+    def get_events(self) -> ([], []):
+        """Returns a Tuple of Event objects which indicates events
+        
+        First tuple value is a set of Regular rated events
+        Second tuple value isd a set of Quick rated events
+        
+        """
+        all_events = self.profile["player"]["events"]
+
+        reg_events = []
+        quick_events = []
+
+        # "2023-11-27" is an example of a date
+        date_format = '%Y-%m-%d'
+
+        for event in all_events:
+            print("Event type is", event["rating_type"])
+            
+            new_event = Event()
+            new_event.date = datetime.strptime(event["date_end"], date_format)
+            new_event.name = event["name"]
+            new_event.rating_before = event["rating_pre"]
+            new_event.rating_after = event["rating_post"]
+
+            # for regular tournaments
+            if event["rating_type"] == "R": 
+                reg_events.append(new_event)
+            # for quick tournaments
+            else:
+                quick_events.append(new_event)
+
+        return (reg_events, quick_events)
 
     def get_profile(self) -> dict:
         """
