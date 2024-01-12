@@ -81,7 +81,7 @@
 
 ## About The Project
 
-[![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
+![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
 
 This program was created to calculate CFC ratings for our members. A future implementation would be in embeding this
 information onto a web service that will automatically calculate ratings. Another idea is to build a HHCC rating system
