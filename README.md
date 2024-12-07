@@ -95,7 +95,6 @@ A future goal is to use the public CFC API to connect to user's CFC ID and run v
 finding user data aspect.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- GETTING STARTED -->
