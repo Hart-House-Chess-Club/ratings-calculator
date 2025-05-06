@@ -133,6 +133,12 @@ This is an example of how to list things you need to use the software and how to
 ![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
 
 
+### Running Web App
+`python3 -m venv .venv`
+`source .venv/bin/activate`
+`pip install -r requirements.txt`
+`python app.py`
+
 ### Installation
 
 Below is the installation process for running our code locally. 
