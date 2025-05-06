@@ -14,11 +14,17 @@ Player Data
 - data on ratings of all players
 
 """
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from pathlib import Path
 from fideparser import tournament, ratingperiod
+import requests
 from Profile import CFCProfile
 from config import Config
-import requests
+
 
 class CFCAssets:
     """Generates a list of norm eligble tournaments in the given country"""
@@ -58,7 +64,7 @@ class TDList:
         """
 
         self.output_file = Path(
-            __file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"tdlist.txt"
+            __file__).parent.parent / "assets" / "cache" / "cfc" / f"tdlist.txt"
 
         # if get_new_data, then save the latest files.
         if get_new_data:
@@ -88,7 +94,10 @@ class TDList:
         """
 
         id_list = []
-        file = open(self.output_file, 'r')
+        
+        print("Output file is", self.output_file)
+        
+        file = open(self.output_file, 'r', encoding='utf-8', errors='replace')
         # file = file.read()
 
         lines = file.readlines()
@@ -123,7 +132,7 @@ class CFCPlayerData:
 
         output_file = f"cfc_player_info_{player_id}"
 
-        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "cfc" / f"{output_file}.json"
+        output_file = Path(__file__).parent.parent / "assets" / "cache" / "cfc" / f"{output_file}.json"
 
         profile.save_profile(str(output_file))
 

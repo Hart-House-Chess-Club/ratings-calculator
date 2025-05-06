@@ -1,4 +1,7 @@
-"""Generates all FIDE data and stores it into the bin
+"""
+Note: this no longer works as the FIDE API has changed
+
+Generates all FIDE data and stores it into the bin
 
 Includes Analysis Data
 - data on rating changes
@@ -81,7 +84,7 @@ class FidePlayerData:
 
         rating_period.save()
 
-        output_file = Path(__file__).parent.parent / "src" / "ratings_calculator" / "assets" / "cache" / "fide" / f"{output_file}.csv"
+        output_file = Path(__file__).parent.parent / "src" / "assets" / "cache" / "fide" / f"{output_file}.csv"
         rating_period.export(output_file, "csv")
 
         print("Finished generating player data")
@@ -101,4 +104,4 @@ class FidePlayerData:
 
 data = FidePlayerData("CAN", False, True)
 
-data.generate_full_year("2023")
+data.generate_full_year("2025")
