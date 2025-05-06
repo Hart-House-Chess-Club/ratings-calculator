@@ -16,8 +16,8 @@ Player Data
 """
 from pathlib import Path
 from fideparser import tournament, ratingperiod
-from src.ratings_calculator.Profile import CFCProfile
-from src.ratings_calculator.config import Config
+from Profile import CFCProfile
+from config import Config
 import requests
 
 class CFCAssets:
