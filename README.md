@@ -132,12 +132,45 @@ This is an example of how to list things you need to use the software and how to
 
 ![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
 
+### Backend Usage
 
-### Running Web App
-`python3 -m venv .venv`
-`source .venv/bin/activate`
-`pip install -r requirements.txt`
-`python app.py`
+1. Create and activate a virtual environment:
+  ```sh
+  python3 -m venv .venv
+  source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+  ```
+
+2. Install required packages:
+  ```sh
+  pip install -r requirements.txt
+  ```
+
+3. Run the Flask application:
+  ```sh
+  python app.py
+  ```
+
+The backend API will be available at [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+### Running the Frontend
+
+1. Start the Flask backend:
+   ```sh
+   python app.py
+   ```
+
+2. Open `frontend/index.html` in your browser (double-click or use a local server).
+
+   - If you want to use a local server (recommended for fetch to work smoothly):
+     ```sh
+     cd frontend
+     python3 -m http.server 8000
+     ```
+     Then visit [http://localhost:8000](http://localhost:8000) in your browser.
+
+3. Click "Fetch Example Data" to see data from the backend API.
+
+> **Note:** The backend must be running at `http://127.0.0.1:5000` for the frontend to fetch data.
 
 ### Installation
 
