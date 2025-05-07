@@ -50,5 +50,33 @@ def predict_rating():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+@app.route('/api/user_ratings_over_time', methods=['GET'])
+def user_ratings_over_time():
+    cfc_id = request.args.get('cfc_id')
+    if not cfc_id:
+        return jsonify({"error": "cfc_id is required"}), 400
+
+    profile = CFCProfile(user_id=cfc_id)
+    reg_events, quick_events = profile.get_events()
+
+    def event_to_dict(event):
+        return {
+            "date": event.date.strftime("%Y-%m-%d"),
+            "rating_after": event.rating_after,
+            "rating_type": "regular"
+        }
+
+    def event_to_dict_quick(event):
+        return {
+            "date": event.date.strftime("%Y-%m-%d"),
+            "rating_after": event.rating_after,
+            "rating_type": "quick"
+        }
+
+    reg_data = [event_to_dict(e) for e in reg_events]
+    quick_data = [event_to_dict_quick(e) for e in quick_events]
+
+    return jsonify({"regular": reg_data, "quick": quick_data})
+
 if __name__ == '__main__':
     app.run(debug=True)

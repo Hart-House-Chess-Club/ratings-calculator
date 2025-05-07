@@ -28,7 +28,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Hart-House-Chess-Club/ratings-calculator">
-    <img src="src/ratings_calculator/assets/chess_svg.svg" alt="Logo" width="80" height="80">
+    <img src="src/assets/chess_svg.svg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">ratings-calculator</h3>
@@ -81,7 +81,7 @@
 
 ## About The Project
 
-![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/CFC_ratings_over_time.png)
+![Rating Calculator[ratings-calculator]](src/assets/CFC_ratings_over_time.png)
 
 
 This program was created to calculate CFC ratings for our members. A future implementation would be in embeding this

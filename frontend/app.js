@@ -49,3 +49,93 @@ document.getElementById('predict-form').onsubmit = async function(e) {
         output.textContent = 'Error fetching data: ' + err;
     }
 };
+
+document.getElementById('plot-btn').onclick = async function() {
+    const cfc_id = document.getElementById('cfc_id').value;
+
+    const chartDiv = document.getElementById('chart');
+    chartDiv.innerHTML = "Loading...";
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/api/user_ratings_over_time?cfc_id=${cfc_id}`);
+        const data = await response.json();
+
+        if (data.error) {
+            chartDiv.innerHTML = data.error;
+            return;
+        }
+
+        // Combine and parse dates
+        const parseDate = d3.timeParse("%Y-%m-%d");
+        const regular = data.regular.map(d => ({...d, date: parseDate(d.date)}));
+        const quick = data.quick.map(d => ({...d, date: parseDate(d.date)}));
+
+        // Set up SVG
+        chartDiv.innerHTML = "";
+        const width = 700, height = 400, margin = {top: 30, right: 30, bottom: 50, left: 60};
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Combine for scales
+        const allData = regular.concat(quick);
+        const x = d3.scaleTime()
+            .domain(d3.extent(allData, d => d.date))
+            .range([margin.left, width - margin.right]);
+        const y = d3.scaleLinear()
+            .domain([d3.min(allData, d => d.rating_after) - 50, d3.max(allData, d => d.rating_after) + 50])
+            .range([height - margin.bottom, margin.top]);
+
+        // Axes
+        svg.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(x));
+        svg.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(y));
+
+        // Line generators
+        const line = d3.line()
+            .x(d => x(d.date))
+            .y(d => y(d.rating_after));
+
+        // Plot regular
+        svg.append("path")
+            .datum(regular)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 2)
+            .attr("d", line);
+
+        // Plot quick
+        svg.append("path")
+            .datum(quick)
+            .attr("fill", "none")
+            .attr("stroke", "orange")
+            .attr("stroke-width", 2)
+            .attr("d", line);
+
+        // Add legend
+        svg.append("circle").attr("cx",width-120).attr("cy",40).attr("r",6).style("fill","steelblue");
+        svg.append("text").attr("x", width-110).attr("y", 45).text("Regular").style("font-size","15px").attr("alignment-baseline","middle");
+        svg.append("circle").attr("cx",width-120).attr("cy",60).attr("r",6).style("fill","orange");
+        svg.append("text").attr("x", width-110).attr("y", 65).text("Quick").style("font-size","15px").attr("alignment-baseline","middle");
+
+        // Axis labels
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x", width/2)
+            .attr("y", height - 10)
+            .text("Date");
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 20)
+            .attr("x", -height/2 + 40)
+            .text("CFC Rating");
+
+    } catch (err) {
+        chartDiv.innerHTML = "Error loading chart: " + err;
+    }
+};
