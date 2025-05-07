@@ -7,6 +7,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
 from src.ratings_service import calculate_rating
+from src.Profile import CFCProfile
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +20,15 @@ def home():
 def get_data():
     data = {"example_key": "example_value"}
     return jsonify(data)
+
+@app.route('/api/ratings', methods=['GET'])
+def get_user_ratings():
+    cfc_id = request.args.get('cfc_id')
+    if not cfc_id:
+        return jsonify({"error": "cfc_id is required"}), 400
+    
+    profile = CFCProfile(user_id=cfc_id)
+    return jsonify(profile.get_profile())
 
 @app.route('/api/predict_rating', methods=['POST'])
 def predict_rating():
