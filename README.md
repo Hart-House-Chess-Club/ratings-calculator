@@ -36,7 +36,7 @@
   <p align="center">
     Calculate ratings based on the CFC model!
     <br />
-    <a href="https://github.com/Hart-House-Chess-Club/ratings-calculator"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Hart-House-Chess-Club/ratings-calculator/tree/main/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Hart-House-Chess-Club/ratings-calculator">View Demo</a>
@@ -130,7 +130,7 @@ This is an example of how to list things you need to use the software and how to
   ```
   - python library requests
 
-![Rating Calculator[ratings-calculator]](src/ratings_calculator/assets/console_app_sample.png)
+![Rating Calculator[ratings-calculator]](src/assets/console_app_sample.png)
 
 ### Backend Usage
 
@@ -171,6 +171,8 @@ The backend API will be available at [http://127.0.0.1:5000](http://127.0.0.1:50
 3. Click "Fetch Example Data" to see data from the backend API.
 
 > **Note:** The backend must be running at `http://127.0.0.1:5000` for the frontend to fetch data.
+
+![Example ratings gain frontend[ratings-calculator]](docs/ratings-gain.png)
 
 ### Installation
 
